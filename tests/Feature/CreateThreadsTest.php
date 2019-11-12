@@ -21,6 +21,15 @@ class CreateThreadsTest extends TestCase
     }
 
     /** @test */
+    public function guestsMayNotSeeCreatePage()
+    {
+        /*$this->expectException(AuthenticationException::class);*/
+        $this->withExceptionHandling()
+            ->get('/threads/create')
+            ->assertRedirect('/login');
+    }
+
+    /** @test */
     public function authenticatedUserCanCreateThread()
     {
         $this->signIn();
