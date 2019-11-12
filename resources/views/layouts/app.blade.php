@@ -47,7 +47,7 @@
                             </a>
 
                             <div class="dropdown-menu" aria-labelledby="channelDropdownMenuLink">
-                                @foreach(\App\Channel::all() as $channel)
+                                @foreach($channels as $channel)
                                     <a class="dropdown-item" href="{{ route('threads.channel.index', ['channel' => $channel->slug]) }}">{{ $channel->name }}</a>
                                 @endforeach
                             </div>
