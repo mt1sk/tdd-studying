@@ -47,10 +47,6 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('threads.index') }}">All threads</a>
-                        </li>
-
-                        <li class="nav-item">
                             <a class="nav-link" href="{{ route('threads.create') }}">New thread</a>
                         </li>
 

@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <div class="row justify-content-center">
+        <div class="row">
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">
@@ -14,33 +14,37 @@
                         {{ $thread->body }}
                     </div>
                 </div>
-            </div>
-        </div>
 
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                @foreach($thread->replies as $reply)
+                @foreach($replies as $reply)
                     @include('threads.reply')
                 @endforeach
-            </div>
-        </div>
 
-        @auth()
-            <div class="row justify-content-center">
-                <div class="col-md-8">
+                {{ $replies->links() }}
+
+                @auth()
                     <form method="POST" action="{{ route('threads_add_reply', ['thread'=>$thread->id, 'channel'=>$thread->channel->id]) }}">
                         @csrf
                         <div class="form-group">
                             <textarea name="body" id="body" cols="30" rows="5" class="form-control" placeholder="Body"></textarea>
-                            <button type="submit" class="btn btn-default">Post</button>
+                            <button type="submit" class="btn btn-primary">Post</button>
                         </div>
                     </form>
+                @else
+                    <p class="text-center">
+                        Please <a href="{{ route('login') }}">sign in</a> to participate.
+                    </p>
+                @endauth
+            </div>
+
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        This thread was published {{ $thread->created_at->diffForHumans() }} by
+                        <a href="#">{{ $thread->creator->name }}</a>, and currently
+                        has {{ $thread->replies_count }} {{ Str::plural('comment', $thread->replies_count) }}.
+                    </div>
                 </div>
             </div>
-        @else
-            <p class="text-center">
-                Please <a href="{{ route('login') }}">sign in</a> to participate.
-            </p>
-        @endauth
+        </div>
     </div>
 @endsection
