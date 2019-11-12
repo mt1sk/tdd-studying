@@ -16,17 +16,16 @@ class CreateThreadsTest extends TestCase
     public function guestsMayNotCreateThread()
     {
         $this->expectException(AuthenticationException::class);
-        $thread = factory(Thread::class)->make();
+        $thread = make(Thread::class);
         $this->post('/threads', $thread->toArray());
     }
 
     /** @test */
     public function authenticatedUserCanCreateThread()
     {
-        $user = factory(User::class)->create();
-        $this->actingAs($user);
+        $this->signIn();
 
-        $thread = factory(Thread::class)->make();
+        $thread = make(Thread::class);
         $this->post('/threads', $thread->toArray());
 
         $this->get('/threads/'.$thread->id)
