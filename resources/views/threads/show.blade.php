@@ -28,7 +28,7 @@
         @auth()
             <div class="row justify-content-center">
                 <div class="col-md-8">
-                    <form method="POST" action="{{ route('threads_add_reply', ['thread'=>$thread->id]) }}">
+                    <form method="POST" action="{{ route('threads_add_reply', ['thread'=>$thread->id, 'channel'=>$thread->channel->id]) }}">
                         @csrf
                         <div class="form-group">
                             <textarea name="body" id="body" cols="30" rows="5" class="form-control" placeholder="Body"></textarea>

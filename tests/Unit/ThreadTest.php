@@ -23,6 +23,12 @@ class ThreadTest extends TestCase
     }
 
     /** @test */
+    public function threadCanMakeStringPath()
+    {
+        $this->assertEquals('/threads/' . $this->thread->channel->slug. '/' . $this->thread->id, $this->thread->path());
+    }
+
+    /** @test */
     public function threadHasReplies()
     {
         $this->assertInstanceOf(Collection::class, $this->thread->replies);
@@ -43,5 +49,11 @@ class ThreadTest extends TestCase
         ]);
 
         $this->assertCount(1, $this->thread->replies);
+    }
+
+    /** @test */
+    public function threadBelongsToChannel()
+    {
+        $this->assertInstanceOf('App\Channel', $this->thread->channel);
     }
 }

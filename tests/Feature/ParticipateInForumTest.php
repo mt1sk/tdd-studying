@@ -16,11 +16,9 @@ class ParticipateInForumTest extends TestCase
     /** @test */
     public function unauthenticatedUserMayNotAddReplies()
     {
-        $this->expectException(AuthenticationException::class);
-        $thread = factory(Thread::class)->create();
-
-        $reply = factory(Reply::class)->create();
-        $this->post('/threads/'.$thread->id.'/replies', $reply->toArray());
+        $this->withExceptionHandling()
+            ->post('/threads/some-channel/1/replies', [])
+            ->assertRedirect('/login');
     }
 
     /** @test */
@@ -32,9 +30,9 @@ class ParticipateInForumTest extends TestCase
         $thread = factory(Thread::class)->create();
 
         $reply = factory(Reply::class)->make();
-        $this->post('/threads/'.$thread->id.'/replies', $reply->toArray());
+        $this->post($thread->path().'/replies', $reply->toArray());
 
-        $this->get('/threads/'.$thread->id)
+        $this->get($thread->path())
             ->assertSee($reply->body);
     }
 }
