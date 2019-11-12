@@ -37,10 +37,15 @@
                             <a class="nav-link" href="{{ route('threads.index') }}">All threads</a>
                         </li>
 
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('threads.create') }}">New thread</a>
+                        </li>
+
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="channelDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Channels
                             </a>
+
                             <div class="dropdown-menu" aria-labelledby="channelDropdownMenuLink">
                                 @foreach(\App\Channel::all() as $channel)
                                     <a class="dropdown-item" href="{{ route('threads.channel.index', ['channel' => $channel->slug]) }}">{{ $channel->name }}</a>
