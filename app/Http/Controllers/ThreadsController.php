@@ -46,7 +46,7 @@ class ThreadsController extends Controller
             'title' => $request->title,
             'body' => $request->body,
         ]);
-        return redirect()->route('threads_show', ['thread'=>$thread->id]);
+        return redirect()->route('threads.show', ['thread'=>$thread->id]);
     }
 
     /**
