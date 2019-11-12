@@ -33,6 +33,19 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="threadsFilterDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Browse
+                            </a>
+
+                            <div class="dropdown-menu" aria-labelledby="threadsFilterDropdownMenuLink">
+                                <a class="dropdown-item" href="{{ route('threads.index') }}">All threads</a>
+                                @auth
+                                    <a class="dropdown-item" href="{{ route('threads.index', ['by' => auth()->user()->name]) }}">My threads</a>
+                                @endauth
+                            </div>
+                        </li>
+
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('threads.index') }}">All threads</a>
                         </li>
