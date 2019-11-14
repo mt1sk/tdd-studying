@@ -8,13 +8,22 @@ class Thread extends Model
 {
     protected $guarded = [];
 
-    /* for all queries */
+    protected $with = ['channel'];
+
+    /**
+     * for all queries
+     * to disable global scope Model::withoutGlobalScopes(['scopeName'])->first();
+     */
     protected static function boot()
     {
         parent::boot();
 
         static::addGlobalScope('replyCount', function($builder) {
             $builder->withCount('replies');
+        });
+
+        static::addGlobalScope('creator', function ($builder) {
+            $builder->with('creator');
         });
     }
 

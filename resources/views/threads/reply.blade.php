@@ -11,7 +11,7 @@
                 <form method="POST" action="{{ route('threads.favorite_reply', ['reply'=>$reply->id]) }}">
                     @csrf
                     <button class="btn btn-primary" {{ $reply->isFavorited() ? 'disabled' : '' }}>
-                        {{ $reply->favorites()->count() }} {{ Str::plural('Favorite', $reply->favorites()->count()) }}
+                        {{ $reply->favorites_count }} {{ Str::plural('Favorite', $reply->favorites_count) }}
                     </button>
                 </form>
             </div>
