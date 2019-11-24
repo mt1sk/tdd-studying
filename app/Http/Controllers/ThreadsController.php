@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Channel;
 use App\Filters\ThreadFilters;
 use App\Thread;
-use App\User;
 use Illuminate\Http\Request;
 
 class ThreadsController extends Controller
@@ -105,11 +104,15 @@ class ThreadsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Thread  $thread
+     * @param  \App\Thread $thread
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @throws \Exception
      */
     public function destroy(Request $request, Channel $channel, Thread $thread)
     {
+        $this->authorize('delete', $thread);
+
         $thread->delete();
         if ($request->wantsJson()) {
             return response(null, 204);

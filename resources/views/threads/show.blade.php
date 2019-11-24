@@ -12,14 +12,14 @@
                                 {{ $thread->title }}
                             </span>
 
-                            @auth()
+                            @can('delete', $thread)
                             <form action="{{ $thread->path() }}" method="POST">
                                 @csrf
                                 {{ method_field('DELETE') }}
 
                                 <button type="submit" class="btn btn-link">Delete thread</button>
                             </form>
-                            @endauth
+                            @endcan
                         </div>
                     </div>
 
