@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Activity;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProfilesController extends Controller
 {
@@ -46,13 +48,9 @@ class ProfilesController extends Controller
      */
     public function show(User $user)
     {
-        $activities = $user->activity()->latest()->with('subject')->take(50)->get()->groupBy(function ($activity) {
-            return $activity->created_at->format('Y-m-d');
-        });
-
         return view('profiles.show', [
             'profileUser'   => $user,
-            'activities'    => $activities,
+            'activities'    => Activity::feed(Auth::user()),
         ]);
     }
 
