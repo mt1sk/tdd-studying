@@ -9,12 +9,7 @@
                 </h5>
 
                 <div>
-                    <form method="POST" action="{{ route('threads.favorite_reply', ['reply'=>$reply->id]) }}">
-                        @csrf
-                        <button class="btn btn-primary" {{ $reply->isFavorited() ? 'disabled' : '' }}>
-                            {{ $reply->favorites_count }} {{ Str::plural('Favorite', $reply->favorites_count) }}
-                        </button>
-                    </form>
+                    <favorite :reply="{{ $reply }}"></favorite>
                 </div>
             </div>
         </div>

@@ -3,9 +3,16 @@
 </template>
 
 <script>
+    import Favorite from "./Favorite";
     export default {
         name: "Reply",
+
         props: ['reply'],
+
+        components: {
+            Favorite,
+        },
+
         data() {
             return {
                 editing: false,
