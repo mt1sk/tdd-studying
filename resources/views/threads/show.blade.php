@@ -29,21 +29,7 @@
                         </div>
                     </div>
 
-                    <replies :data="{{ $thread->replies }}" @removed="repliesCount--"></replies>
-
-                    @auth()
-                        <form method="POST" action="{{ route('threads_add_reply', ['thread'=>$thread->id, 'channel'=>$thread->channel->id]) }}">
-                            @csrf
-                            <div class="form-group">
-                                <textarea name="body" id="body" cols="30" rows="5" class="form-control" placeholder="Body"></textarea>
-                                <button type="submit" class="btn btn-primary">Post</button>
-                            </div>
-                        </form>
-                    @else
-                        <p class="text-center">
-                            Please <a href="{{ route('login') }}">sign in</a> to participate.
-                        </p>
-                    @endauth
+                    <replies :data="{{ $thread->replies }}" @added="repliesCount++" @removed="repliesCount--"></replies>
                 </div>
 
                 <div class="col-md-4">
