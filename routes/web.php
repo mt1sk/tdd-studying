@@ -30,6 +30,8 @@ Route::get('/threads/{channel}/{thread}/replies', 'RepliesController@index');
 Route::post('/threads/{channel}/{thread}/replies', 'RepliesController@store')->name('threads_add_reply');
 Route::patch('/replies/{reply}', 'RepliesController@update');
 Route::delete('/replies/{reply}', 'RepliesController@destroy');
+Route::post('/threads/{channel}/{thread}/subscriptions', 'ThreadSubscriptionsController@store')->middleware('auth');
+Route::delete('/threads/{channel}/{thread}/subscriptions', 'ThreadSubscriptionsController@destroy')->middleware('auth');
 
 Route::post('/replies/{reply}/favorites', 'FavoritesController@store')->name('threads.favorite_reply');
 Route::delete('/replies/{reply}/favorites', 'FavoritesController@destroy');

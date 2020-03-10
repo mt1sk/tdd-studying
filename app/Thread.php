@@ -13,6 +13,8 @@ class Thread extends Model
 
     protected $with = ['channel'];
 
+    protected $appends = ['isSubscribedTo'];
+
     /**
      * for all queries
      * to disable global scope Model::withoutGlobalScopes(['scopeName'])->first();
@@ -77,5 +79,12 @@ class Thread extends Model
     public function subscriptions()
     {
         return $this->hasMany(ThreadSubscription::class);
+    }
+
+    public function getIsSubscribedToAttribute()
+    {
+        return $this->subscriptions()
+            ->where('user_id', Auth::id())
+            ->exists();
     }
 }
