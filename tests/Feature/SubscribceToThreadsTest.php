@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use App\Thread;
-use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
@@ -20,12 +19,16 @@ class SubscribceToThreadsTest extends TestCase
 
         $this->post($thread->path().'/subscriptions');
 
+        $this->assertCount(1, $thread->subscriptions);
+
+        /*$this->assertCount(0, Auth::user()->notifications);
+
         $thread->addReply([
             'user_id'   => Auth::id(),
             'body'      => 'Some reply body',
         ]);
 
-        /*$this->assertCount(1, Auth::user()->notifications);*/
+        $this->assertCount(1, Auth::user()->fresh()->notifications);*/
     }
 
     /** @test */

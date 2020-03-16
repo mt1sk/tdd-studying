@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Notifications\ThreadWasUpdated;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
@@ -49,7 +50,15 @@ class Thread extends Model
 
     public function addReply($reply)
     {
-        return $this->replies()->create($reply);
+        $reply = $this->replies()->create($reply);
+
+        $this->subscriptions
+            ->filter(function ($sub) use ($reply) {
+                return $sub->user_id != $reply->user_id;
+            })
+            ->each->notify($reply);
+
+        return $reply;
     }
 
     public function channel()
@@ -67,6 +76,8 @@ class Thread extends Model
         $this->subscriptions()->create([
             'user_id' => $userId ?: Auth::id(),
         ]);
+
+        return $this;
     }
 
     public function unsubscribe($userId = null)
@@ -76,6 +87,9 @@ class Thread extends Model
             ->delete();
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function subscriptions()
     {
         return $this->hasMany(ThreadSubscription::class);
