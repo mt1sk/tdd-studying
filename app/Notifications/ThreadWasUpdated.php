@@ -2,6 +2,8 @@
 
 namespace App\Notifications;
 
+use App\Reply;
+use App\Thread;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -11,8 +13,14 @@ class ThreadWasUpdated extends Notification
 {
     use Queueable;
 
+    /**
+     * @var Thread $thread
+     */
     private $thread;
 
+    /**
+     * @var Reply $reply
+     */
     private $reply;
 
     /**
@@ -62,7 +70,8 @@ class ThreadWasUpdated extends Notification
     public function toArray($notifiable)
     {
         return [
-            'message'   => 'Temporary placeholder.',
+            'message'   => $this->reply->owner->name . ' replies to ' .$this->thread->title,
+            'link'      => $this->reply->path(),
         ];
     }
 }
