@@ -52,11 +52,7 @@ class Thread extends Model
     {
         $reply = $this->replies()->create($reply);
 
-        $this->subscriptions
-            ->filter(function ($sub) use ($reply) {
-                return $sub->user_id != $reply->user_id;
-            })
-            ->each->notify($reply);
+        $this->notifySubscribers($reply);
 
         return $reply;
     }
@@ -100,5 +96,16 @@ class Thread extends Model
         return $this->subscriptions()
             ->where('user_id', Auth::id())
             ->exists();
+    }
+
+    /**
+     * @param $reply
+     */
+    public function notifySubscribers($reply): void
+    {
+        $this->subscriptions
+            ->where('user_id', '!=', $reply->user_id)
+            ->each
+            ->notify($reply);
     }
 }
